@@ -12,15 +12,15 @@ class Trip(models.Model):
 
 class Driver(models.Model):
 	name = models.CharField(max_length = 30)
-	emailAddress = models.CharField(max_length = 40)
+	email_address = models.CharField(max_length = 40)
 	score = models.IntegerField()
 
 	def __str__(self):
-		return (self.name)
+		return (self.name, self.email_address, self.score)
 
 class Manager(models.Model):
 	name = models.CharField(max_length = 30)
-	emailAddress = models.CharField(max_length = 40)
+	email_address = models.CharField(max_length = 40)
 
 	def __str__(self):
 		return (self.name)
