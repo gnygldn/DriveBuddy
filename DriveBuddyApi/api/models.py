@@ -4,7 +4,7 @@ from django.db import models
 
 class Trip(models.Model):
 	distance = models.IntegerField()
-	start_date = models.DateTimeField(auto_now=True)
+	start_date = models.DateTimeField()
 	duration = models.IntegerField()
 
 	def __str__(self):

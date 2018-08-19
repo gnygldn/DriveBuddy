@@ -1,6 +1,6 @@
 from django.urls import path
 from api import views
-from .views import list_of_trips, list_of_drivers
+from .views import list_of_trips, list_of_drivers, home, driver_details
 
 urlpatterns = [
 	path("api/drivers/", views.list_of_drivers, name="list_of_drivers"),

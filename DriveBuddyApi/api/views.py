@@ -1,7 +1,10 @@
 from django.shortcuts import render, get_object_or_404
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from .models import Trip, Driver
 # Create your views here.
+
+def home(request):
+	return HttpResponse("You are looking at Guney's first Django API!!")
 
 def list_of_trips(request):
 	trips = Trip.objects.all()
