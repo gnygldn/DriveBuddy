@@ -12,3 +12,12 @@ def list_of_drivers(request):
 	drivers = Driver.objects.all()
 	data = {"drivers": list(drivers.values("name","email_address","score"))}
 	return JsonResponse(data)
+
+def driver_details(request, pk):
+	driver = get_object_or_404(Driver, pk=pk)
+	data = {"driver" : {
+		"name": driver.name,
+		"email_address": driver.email_address,
+		"score": driver.score
+	}}
+	return JsonResponse(data)
