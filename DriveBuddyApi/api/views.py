@@ -24,3 +24,8 @@ def driver_details(request, pk):
 		"score": driver.score
 	}}
 	return JsonResponse(data)
+
+def filter_trips(request, date_start, date_end):
+	trips = get_object_or_404(Trip, date_start > trip.date and date_end-date_start <= duration )
+	data = {"trips": list(trips.values("distance", "start_date", "duration"))}
+	return JsonResponse(data)
