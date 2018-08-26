@@ -4,8 +4,21 @@ from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 from .models import Trip, Driver
 from .serializers import DriverSerializer, TripSerializer
+from django.contrib.auth import authenticate
 import datetime
 import sys
+import status
+
+class LoginView(APIView):
+	permission_classes = ()
+	def post(self, request,):
+		username = request.data.get("username")
+		password = request.data.get("password")
+		user = authenticate(username=username, password=password)
+		if user:
+			return Response({"token": user.auth_token.key})
+		else:
+			return Response({"error": "Wrong Credentials"}, status=status.HTTP_400_BAD_REQUEST)
 
 class list_of_trips(generics.ListCreateAPIView):
 	queryset = Trip.objects.all()
@@ -19,8 +32,12 @@ class driver_details(generics.RetrieveDestroyAPIView):
 	queryset = Driver.objects.all()
 	serializer_class = DriverSerializer
 
+class driver_create(generics.CreateAPIView):
+	authentication_classes = ()
+	permission_classes = ()
+	serializer_class = DriverSerializer
+
 class list_of_trips_selected_between_dates(APIView):
-	print("Guney",file=sys.stderr)
 	def get(self, request, date1):
 		date = str(date1)
 		startyear = int(date[:4])
@@ -31,9 +48,6 @@ class list_of_trips_selected_between_dates(APIView):
 		endday = int(date[14:])
 		start = datetime.date(startyear,startmonth,startday)
 		end = datetime.date(endyear,endmonth,endday)
-
-		print (start,file=sys.stderr)
-		print (end,file=sys.stderr)
 		trips = Trip.objects.all()
 		filteredtrips = []
 		for trip in trips:
